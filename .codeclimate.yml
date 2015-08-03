@@ -1,0 +1,7 @@
+engines:
+  phpmd:
+    enabled: true
+
+exclude_paths:
+- .git/**/*
+- vendor/**/*
