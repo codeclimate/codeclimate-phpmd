@@ -1,6 +1,10 @@
 engines:
-  phpmd:
+  phpcodesniffer:
     enabled: true
+    config:
+    standard: "PSR1, PSR2"
+  # phpmd:
+  #  enabled: true
 
 exclude_paths:
 - .git/**/*
