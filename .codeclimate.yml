@@ -1,5 +1,7 @@
 engines:
-  phpcodesniffer:
+  fixme:
+    enabled: true
+  phpmd:
     enabled: true
 
 exclude_paths:
