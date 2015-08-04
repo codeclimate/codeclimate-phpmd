@@ -2,5 +2,3 @@
 
 `codeclimate-phpmd` is a Code Climate Engine that wraps the PHP Mess
 Detector (PHPMD) static analysis tool.
-
-## TODO
