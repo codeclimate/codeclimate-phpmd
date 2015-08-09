@@ -1,17 +1,24 @@
-FROM alpine:edge
+FROM phusion/baseimage
 
 WORKDIR /usr/src/app
 COPY composer.json /usr/src/app/
 COPY composer.lock /usr/src/app/
 
-RUN apk --update add git php-common php-xml php-dom php-ctype php-iconv php-json php-phar php-openssl curl && \
-    curl -sS https://getcomposer.org/installer | php && \
-    /usr/src/app/composer.phar install && \
-    apk del build-base && rm -fr /usr/share/ri
+RUN apt-get update
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y curl git
+RUN add-apt-repository -y ppa:ondrej/php5-5.6
+RUN apt-get update
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes php5-cli
 
-RUN adduser -u 9000 -D app
+RUN curl -sS https://getcomposer.org/installer | php
+RUN /usr/src/app/composer.phar install
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN adduser --uid 9000 --disabled-password app
 USER app
 
 COPY . /usr/src/app
 
 CMD ["/usr/src/app/bin/codeclimate-phpmd"]
+

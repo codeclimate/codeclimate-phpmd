@@ -1,8 +1,13 @@
 engines:
   fixme:
-    enabled: true
+    enabled: false
   phpmd:
     enabled: true
+  phpcodesniffer:
+    enabled: true
+    config:
+      - file_extensions: "php"
+      - standard: ["PSR1", "PSR2"]
 
 exclude_paths:
 - .git/**/*
