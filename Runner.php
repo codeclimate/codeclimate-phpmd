@@ -12,13 +12,9 @@ class Runner
     private $config;
     private $server;
 
-    public function setConfig($config)
+    public function __construct($config, $server)
     {
         $this->config = $config;
-    }
-
-    public function setServer($server)
-    {
         $this->server = $server;
     }
 

@@ -19,19 +19,17 @@ use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 use PHPMD\Renderer\JSONRenderer;
 
-$runner = new Runner();
+// obtain the config
+$config = json_decode(file_get_contents('/config.json'), true);
 
 // setup forking daemon
 $server = new \fork_daemon();
 $server->max_children_set(20);
 $server->max_work_per_child_set(50);
 $server->store_result_set(true);
-$response = $server->register_child_run(array($runner, "run"));
+$runner = new Runner($config, $server);
+$server->register_child_run(array($runner, "run"));
 
-$config = json_decode(file_get_contents('/config.json'), true);
-
-$runner->setConfig($config);
-$runner->setServer($server);
 $runner->queueDirectory("/code");
 
 $server->process_work(true);
