@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM phusion/baseimage:0.9.17
 
 WORKDIR /usr/src/app
 COPY composer.json /usr/src/app/
