@@ -10,9 +10,9 @@
 
 ###Config Options
 
-Format the values for these config options per the [PHP_CodeSniffer documentation](https://github.com/squizlabs/PHP_CodeSniffer).
+Format the values for these config options per the [PHPMD documentation](http://phpmd.org/documentation/index.html).
 
-* file_extensions - This is where you can configure the file extensions for the files that you want PHP_CodeSniffer to analyze.
+* file_extensions - This is where you can configure the file extensions for the files that you want PHPMD to analyze.
 * rulesets - This is the list of rulesets that you want PHPMD to use while analyzing your files.
 
 ###Sample Config
