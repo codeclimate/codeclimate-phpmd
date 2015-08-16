@@ -24,7 +24,7 @@ $config = json_decode(file_get_contents('/config.json'), true);
 
 // setup forking daemon
 $server = new \fork_daemon();
-$server->max_children_set(20);
+$server->max_children_set(3);
 $server->max_work_per_child_set(50);
 $server->store_result_set(true);
 $runner = new Runner($config, $server);
