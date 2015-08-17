@@ -49,33 +49,33 @@ class JSONRenderer extends AbstractRenderer
         $writer = $this->getWriter();
 
         foreach ($report->getRuleViolations() as $violation) {
-          $rule = $violation->getRule();
-          $checkName = preg_replace("/^PHPMD\/Rule\//", "", str_replace("\\", "/", get_class($rule)));
+            $rule = $violation->getRule();
+            $checkName = preg_replace("/^PHPMD\/Rule\//", "", str_replace("\\", "/", get_class($rule)));
 
-          $path = preg_replace("/^\/code\//", "", $violation->getFileName());
-          $category = $this->ruleCategories[$checkName];
+            $path = preg_replace("/^\/code\//", "", $violation->getFileName());
+            $category = $this->ruleCategories[$checkName];
 
-          if ($category == null) {
-            $category = "Style";
-          }
+            if ($category == null) {
+                $category = "Style";
+            }
 
-          $issue = array(
-            "type" => "issue",
-            "check_name" => $checkName,
-            "description" => $violation->getDescription(),
-            "categories" => array($category),
-            "location" => array(
-              "path" => $path,
-              "lines" => array(
-                "begin" => $violation->getBeginLine(),
-                "end" => $violation->getEndLine()
-              )
-            )
-          );
+            $issue = array(
+                "type" => "issue",
+                "check_name" => $checkName,
+                "description" => $violation->getDescription(),
+                "categories" => array($category),
+                "location" => array(
+                    "path" => $path,
+                    "lines" => array(
+                        "begin" => $violation->getBeginLine(),
+                        "end" => $violation->getEndLine()
+                    )
+                )
+            );
 
-          $json = json_encode($issue, JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE);
-          $writer->write($json);
-          $writer->write(chr(0));
+            $json = json_encode($issue, JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE);
+            $writer->write($json);
+            $writer->write(chr(0));
         }
     }
 }

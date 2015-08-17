@@ -1,11 +1,47 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "846cbcdaecb636c879610cc9d3da9523",
+    "hash": "769f093b0b48da0d80a8a36f288c52c6",
     "packages": [
+        {
+            "name": "barracudanetworks/forkdaemon-php",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barracudanetworks/forkdaemon-php.git",
+                "reference": "9ca340a3c5f873dd731e0f1df2d79c16b1efd0d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barracudanetworks/forkdaemon-php/zipball/9ca340a3c5f873dd731e0f1df2d79c16b1efd0d8",
+                "reference": "9ca340a3c5f873dd731e0f1df2d79c16b1efd0d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "fork_daemon.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A library to make setup and management of forking daemons in PHP easy.",
+            "homepage": "https://github.com/barracudanetworks/forkdaemon-php",
+            "keywords": [
+                "daemons",
+                "forking",
+                "php"
+            ],
+            "time": "2015-05-01 13:48:28"
+        },
         {
             "name": "pdepend/pdepend",
             "version": "2.1.0",
