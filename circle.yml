@@ -3,7 +3,6 @@ machine:
     - docker
   environment:
     CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-    image_name: codeclimate-phpmd
 
 dependencies:
   pre:
@@ -14,10 +13,10 @@ dependencies:
 
 test:
   override:
-    - docker build -t=$registry_root/$image_name:b$CIRCLE_BUILD_NUM .
+    - docker build -t=$registry_root/$CIRCLE_PROJECT_REPONAME:b$CIRCLE_BUILD_NUM .
 
 deployment:
   registry:
     branch: master
     commands:
-      - docker push $registry_root/$image_name:b$CIRCLE_BUILD_NUM
+      - docker push $registry_root/$CIRCLE_PROJECT_REPONAME:b$CIRCLE_BUILD_NUM
