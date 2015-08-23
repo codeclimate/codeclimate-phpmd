@@ -10,6 +10,7 @@ dependencies:
     - curl https://sdk.cloud.google.com | bash
     - gcloud auth activate-service-account $gcloud_account_email --key-file /tmp/gcloud_key.json
     - gcloud docker -a
+  override:
 
 test:
   override:
