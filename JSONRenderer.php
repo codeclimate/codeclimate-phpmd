@@ -21,6 +21,7 @@ class JSONRenderer extends AbstractRenderer
 
             $metric = $violation->getMetric();
             $points = Category::pointsFor($checkName, $metric);
+            $content = Category::documentationFor($checkName);
 
             $issue = array(
                 "type" => "issue",
@@ -34,8 +35,14 @@ class JSONRenderer extends AbstractRenderer
                         "begin" => $violation->getBeginLine(),
                         "end" => $violation->getEndLine()
                     )
-                )
+                ),
             );
+
+            if ($content) {
+                $issue["content"] = array(
+                    "body" => $content
+                );
+            }
 
             $json = json_encode($issue, JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE);
             $writer->write($json);

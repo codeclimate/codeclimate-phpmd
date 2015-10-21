@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'httparty'
+require 'fileutils'
+
+CONTENT_DIR = "./content"
+
+categories = {
+  cleancode: "http://phpmd.org/rules/cleancode.txt",
+  codesize: "http://phpmd.org/rules/codesize.txt",
+  controversial: "http://phpmd.org/rules/controversial.txt",
+  design: "http://phpmd.org/rules/design.txt",
+  naming: "http://phpmd.org/rules/naming.txt",
+  unused: "http://phpmd.org/rules/unusedcode.txt"
+}
+
+FileUtils.rm_rf(CONTENT_DIR)
+
+categories.each do |category, url|
+  category_path = "#{CONTENT_DIR}/#{category}/"
+  FileUtils.mkdir_p(category_path)
+
+  text = HTTParty.get(url).body
+
+  matches = text.split(/=+\n.*?\n=+/, 2).pop
+  matches = matches.split(/^=+\n$/)
+
+  sections = matches.each_with_object([]) do |match, array|
+    split = match.split(/\n/)
+    title = split.pop
+    body = split.join("\n")
+
+    body.gsub!(/(?<=Example:) ::/, "\n\n```php")
+    body = body.split(/This rule.*/).shift
+    body += "\n```"
+
+
+    array << body
+    array << title
+  end
+
+  sections.shift
+  sections.pop
+
+  sections.each_slice(2) do |(header, body)|
+    next if header == "Remark"
+
+    file_name = header.gsub(" ", "_").downcase
+    File.open("#{category_path}/#{file_name}.txt", "w") do |file|
+      file.write(body)
+    end
+  end
+end

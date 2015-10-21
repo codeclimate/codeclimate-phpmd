@@ -62,4 +62,17 @@ class Category
 
         return $category;
     }
+
+    public static function documentationFor($checkName)
+    {
+        if (preg_match("/^Unused/i", $checkName)) {
+            $checkName = "Unused/" . $checkName;
+        }
+
+        $filePath = dirname(__FILE__) . "/content/" . strtolower($checkName) . ".txt";
+
+        if (file_exists($filePath)) {
+            return file_get_contents($filePath);
+        }
+    }
 }
