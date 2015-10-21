@@ -13,6 +13,7 @@ ini_set('memory_limit', -1);
 require_once __DIR__.'/vendor/autoload.php';
 require_once "JSONRenderer.php";
 require_once "Runner.php";
+require_once "Category.php";
 
 use PHPMD\PHPMD;
 use PHPMD\RuleSetFactory;
