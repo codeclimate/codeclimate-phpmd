@@ -9,6 +9,8 @@ use PHPMD\Renderer\JSONRenderer;
 
 class Runner
 {
+    const RULESETS = 'cleancode,codesize,controversial,design,naming,unusedcode';
+
     private $config;
     private $server;
 
@@ -20,7 +22,7 @@ class Runner
 
     public function queueDirectory($dir, $prefix = '')
     {
-        if(isset($this->config['include_paths'])) {
+        if (isset($this->config['include_paths'])) {
             $this->queueWithIncludePaths();
         } else {
             $this->queuePaths($dir, $prefix, $this->config['exclude_paths']);
@@ -29,21 +31,21 @@ class Runner
         $this->server->process_work(false);
     }
 
-    public function queueWithIncludePaths() {
+    public function queueWithIncludePaths()
+    {
         foreach ($this->config['include_paths'] as $f) {
             if ($f !== '.' and $f !== '..') {
-
                 if (is_dir("/code$f")) {
                     $this->queuePaths("/code$f", "$f/");
                     continue;
                 }
-
                 $this->server->addwork(array("/code/$f"));
             }
         }
     }
 
-    public function queuePaths($dir, $prefix = '', $exclusions = []) {
+    public function queuePaths($dir, $prefix = '', $exclusions = [])
+    {
         $dir = rtrim($dir, '\\/');
 
         foreach (scandir($dir) as $f) {
@@ -63,6 +65,20 @@ class Runner
         }
     }
 
+    public function prefixCodeDirectory($configRulesets)
+    {
+        $officialPhpRulesets = explode(',', Runner::RULESETS);
+        $configRulesets = explode(',', $configRulesets);
+
+        foreach ($configRulesets as &$r) {
+            if (!in_array($r, $officialPhpRulesets) and $r[0] != "/") {
+                $r  = "/code/$r";
+            }
+        }
+
+        return implode(',', $configRulesets);
+    }
+
     public function run($files)
     {
         $resultFile = tempnam(sys_get_temp_dir(), 'phpmd');
@@ -78,10 +94,12 @@ class Runner
             $phpmd->setFileExtensions(explode(',', $this->config['config']['file_extensions']));
         }
 
-        $rulesets = "cleancode,codesize,controversial,design,naming,unusedcode";
+        $rulesets = Runner::RULESETS;
 
         if (isset($this->config['config']['rulesets'])) {
-            $rulesets = $this->config['config']['rulesets'];
+            $rulesets = $this->prefixCodeDirectory(
+                $this->config['config']['rulesets']
+            );
         }
 
         $phpmd->processFiles(
