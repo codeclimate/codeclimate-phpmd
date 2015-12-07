@@ -71,7 +71,7 @@ class Runner
         $configRulesets = explode(',', $configRulesets);
 
         foreach ($configRulesets as &$r) {
-            if (!in_array($r, $officialPhpRulesets)) {
+            if (!in_array($r, $officialPhpRulesets) and $r[0] != "/") {
                 $r  = "/code/$r";
             }
         }
