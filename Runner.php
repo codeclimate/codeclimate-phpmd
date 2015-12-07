@@ -9,6 +9,8 @@ use PHPMD\Renderer\JSONRenderer;
 
 class Runner
 {
+    const RULESETS = 'cleancode,codesize,controversial,design,naming,unusedcode';
+
     private $config;
     private $server;
 
@@ -63,6 +65,19 @@ class Runner
         }
     }
 
+    public function prefixCodeDirectory($configRulesets) {
+        $officialPhpRulesets = explode(',', Runner::RULESETS);
+        $configRulesets = explode(',', $configRulesets);
+
+        foreach ($configRulesets as &$r) {
+            if (!in_array($r, $officialPhpRulesets)) {
+             $r  = "/code/$r";
+            }
+        }
+
+        return implode(',', $configRulesets);
+    }
+
     public function run($files)
     {
         $resultFile = tempnam(sys_get_temp_dir(), 'phpmd');
@@ -78,10 +93,11 @@ class Runner
             $phpmd->setFileExtensions(explode(',', $this->config['config']['file_extensions']));
         }
 
-        $rulesets = "cleancode,codesize,controversial,design,naming,unusedcode";
+        $rulesets = Runner::RULESETS;
 
         if (isset($this->config['config']['rulesets'])) {
             $rulesets = $this->config['config']['rulesets'];
+            $rulesets = $this->prefixCodeDirectory($rulesets);
         }
 
         $phpmd->processFiles(
