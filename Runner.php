@@ -22,7 +22,7 @@ class Runner
 
     public function queueDirectory($dir, $prefix = '')
     {
-        if(isset($this->config['include_paths'])) {
+        if (isset($this->config['include_paths'])) {
             $this->queueWithIncludePaths();
         } else {
             $this->queuePaths($dir, $prefix, $this->config['exclude_paths']);
@@ -31,21 +31,21 @@ class Runner
         $this->server->process_work(false);
     }
 
-    public function queueWithIncludePaths() {
+    public function queueWithIncludePaths()
+    {
         foreach ($this->config['include_paths'] as $f) {
             if ($f !== '.' and $f !== '..') {
-
                 if (is_dir("/code$f")) {
                     $this->queuePaths("/code$f", "$f/");
                     continue;
                 }
-
                 $this->server->addwork(array("/code/$f"));
             }
         }
     }
 
-    public function queuePaths($dir, $prefix = '', $exclusions = []) {
+    public function queuePaths($dir, $prefix = '', $exclusions = [])
+    {
         $dir = rtrim($dir, '\\/');
 
         foreach (scandir($dir) as $f) {
@@ -65,13 +65,14 @@ class Runner
         }
     }
 
-    public function prefixCodeDirectory($configRulesets) {
+    public function prefixCodeDirectory($configRulesets)
+    {
         $officialPhpRulesets = explode(',', Runner::RULESETS);
         $configRulesets = explode(',', $configRulesets);
 
         foreach ($configRulesets as &$r) {
             if (!in_array($r, $officialPhpRulesets)) {
-             $r  = "/code/$r";
+                $r  = "/code/$r";
             }
         }
 
@@ -96,8 +97,9 @@ class Runner
         $rulesets = Runner::RULESETS;
 
         if (isset($this->config['config']['rulesets'])) {
-            $rulesets = $this->config['config']['rulesets'];
-            $rulesets = $this->prefixCodeDirectory($rulesets);
+            $rulesets = $this->prefixCodeDirectory(
+                $this->config['config']['rulesets']
+            );
         }
 
         $phpmd->processFiles(
