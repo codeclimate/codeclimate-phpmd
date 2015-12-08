@@ -26,7 +26,7 @@ Format the values for these config options per the [PHPMD documentation](http://
         enabled: true
         config:
           file_extensions: "php"
-          rulesets: "unusedcode"
+          rulesets: "unusedcode,codesize,naming,optional_relative_path_to_custom_ruleset.xml"
     ratings:
       paths:
       - "**.php"
