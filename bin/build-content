@@ -4,6 +4,9 @@ require 'httparty'
 require 'fileutils'
 
 CONTENT_DIR = "./content"
+FILE_NAME_OVERRIDES = {
+  "excessiveclasscomplexity" => "weightedmethodcount",
+}
 
 categories = {
   cleancode: "http://phpmd.org/rules/cleancode.txt",
@@ -15,11 +18,14 @@ categories = {
 }
 
 FileUtils.rm_rf(CONTENT_DIR)
+FileUtils.mkdir_p(CONTENT_DIR)
+
+def file_name(header)
+  file_name = header.gsub(" ", "_").downcase
+  FILE_NAME_OVERRIDES.fetch(file_name, file_name)
+end
 
 categories.each do |category, url|
-  category_path = "#{CONTENT_DIR}/#{category}/"
-  FileUtils.mkdir_p(category_path)
-
   text = HTTParty.get(url).body
 
   matches = text.split(/=+\n.*?\n=+/, 2).pop
@@ -34,7 +40,6 @@ categories.each do |category, url|
     body = body.split(/This rule.*/).shift
     body += "\n```"
 
-
     array << body
     array << title
   end
@@ -45,8 +50,7 @@ categories.each do |category, url|
   sections.each_slice(2) do |(header, body)|
     next if header == "Remark"
 
-    file_name = header.gsub(" ", "_").downcase
-    File.open("#{category_path}/#{file_name}.txt", "w") do |file|
+    File.open("#{CONTENT_DIR}/#{file_name(header)}.txt", "w") do |file|
       file.write(body)
     end
   end
