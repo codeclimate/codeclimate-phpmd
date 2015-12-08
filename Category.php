@@ -65,11 +65,11 @@ class Category
 
     public static function documentationFor($checkName)
     {
-        if (preg_match("/^Unused/i", $checkName)) {
-            $checkName = "Unused/" . $checkName;
-        }
+        $rule = array_pop(
+            explode("/", $checkName)
+        );
 
-        $filePath = dirname(__FILE__) . "/content/" . strtolower($checkName) . ".txt";
+        $filePath = dirname(__FILE__) . "/content/" . strtolower($rule) . ".txt";
 
         if (file_exists($filePath)) {
             return file_get_contents($filePath);
