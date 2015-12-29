@@ -102,12 +102,14 @@ class Runner
             );
         }
 
-        $phpmd->processFiles(
-            implode(",", $files),
-            $rulesets,
-            array($renderer),
-            $ruleSetFactory
-        );
+        foreach ($files as &$file) {
+            $phpmd->processFiles(
+                $file,
+                $rulesets,
+                array($renderer),
+                $ruleSetFactory
+            );
+        }
 
         return $resultFile;
     }
