@@ -35,8 +35,8 @@ class Runner
     {
         foreach ($this->config['include_paths'] as $f) {
             if ($f !== '.' and $f !== '..') {
-                if (is_dir("/code$f")) {
-                    $this->queuePaths("/code$f", "$f/");
+                if (is_dir("/code/$f")) {
+                    $this->queuePaths("/code/$f", "$f");
                     continue;
                 }
                 $this->server->addwork(array("/code/$f"));
