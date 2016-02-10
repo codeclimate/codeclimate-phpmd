@@ -26,6 +26,7 @@ class Category
         "Design/NumberOfChildren" => ["Clarity", 1000000],
         "Design/TooManyFields" => ["Complexity", 900000],
         "Design/TooManyMethods" => ["Complexity", 2000000],
+        "Design/TooManyPublicMethods" => ["Complexity", 2000000],
         "Design/WeightedMethodCount" => ["Complexity", 2000000],
         "ExcessivePublicCount" => ["Complexity", 700000],
         "Naming/BooleanGetMethodName" => ["Style", 200000],
