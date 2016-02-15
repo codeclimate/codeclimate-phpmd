@@ -31,7 +31,7 @@ class Category
         "ExcessivePublicCount" => ["Complexity", 700000],
         "Naming/BooleanGetMethodName" => ["Style", 200000],
         "Naming/ConstantNamingConventions" => ["Style", 100000],
-        "Naming/ConstructorWithNameAsEnclosingClass" => ["Compatability", 400000],
+        "Naming/ConstructorWithNameAsEnclosingClass" => ["Compatibility", 400000],
         "Naming/LongVariable" => ["Style", 1000000],
         "Naming/ShortMethodName" => ["Style", 800000],
         "Naming/ShortVariable" => ["Style", 500000],
