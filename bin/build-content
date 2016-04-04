@@ -52,6 +52,7 @@ categories.each do |category, url|
 
     File.open("#{CONTENT_DIR}/#{file_name(header)}.txt", "w") do |file|
       file.write(body)
+      file.write("\n\nSource: #{url}")
     end
   end
 end
