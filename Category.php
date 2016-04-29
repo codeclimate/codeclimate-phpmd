@@ -16,6 +16,7 @@ class Category
         "CyclomaticComplexity" => ["Complexity", 100000],
         "Design/CouplingBetweenObjects" => ["Clarity", 400000],
         "Design/DepthOfInheritance" => ["Clarity", 500000],
+        "Design/DevelopmentCodeFragment" => ["Security", 100000],
         "Design/EvalExpression" => ["Security", 300000],
         "Design/ExitExpression" => ["Bug Risk", 200000],
         "Design/GotoStatement" => ["Clarity", 200000],
