@@ -5,6 +5,7 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Category\Category;
+use PHPMD\Fingerprint;
 
 class JSONRenderer extends AbstractRenderer
 {
@@ -42,6 +43,14 @@ class JSONRenderer extends AbstractRenderer
                 $issue["content"] = array(
                     "body" => $content
                 );
+            }
+
+            $name = $violation->getMethodName() ?: $violation->getFunctionName() ?: $violation->getClassName();
+            $fingerprintObject = new Fingerprint($path, $checkName, $name);
+            $fingerprint = $fingerprintObject->compute();
+
+            if ($fingerprint) {
+                $issue["fingerprint"] = $fingerprint;
             }
 
             $json = json_encode($issue, JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE);
