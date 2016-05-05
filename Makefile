@@ -1,4 +1,4 @@
-.PHONY: image composer-update
+.PHONY: image composer-update citest test
 
 IMAGE_NAME ?= codeclimate/codeclimate-phpmd
 
@@ -11,3 +11,9 @@ composer-update:
 	  --volume $(PWD)/composer.json:/usr/src/app/composer.json:ro \
 	  $(IMAGE_NAME) \
 	  sh -c 'php composer.phar update && cat composer.lock' > composer.lock
+
+citest:
+	docker run --rm $(IMAGE_NAME) vendor/bin/phpunit ./tests
+
+test: image
+	docker run -it --rm $(IMAGE_NAME) vendor/bin/phpunit ./tests
