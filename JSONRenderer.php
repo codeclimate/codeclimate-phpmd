@@ -2,8 +2,6 @@
 
 namespace PHPMD\Renderer;
 
-require_once "Fingerprint.php";
-
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Category\Category;
@@ -47,7 +45,8 @@ class JSONRenderer extends AbstractRenderer
                 );
             }
 
-            $fingerprintObject = new Fingerprint($path, $rule);
+            $name = $violation->getMethodName() ?: $violation->getFunctionName() ?: $violation->getClassName();
+            $fingerprintObject = new Fingerprint($path, $checkName, $name);
             $fingerprint = $fingerprintObject->compute();
 
             if ($fingerprint) {

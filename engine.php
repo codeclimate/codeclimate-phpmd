@@ -11,6 +11,7 @@ date_default_timezone_set('UTC');
 ini_set('memory_limit', -1);
 
 require_once __DIR__.'/vendor/autoload.php';
+require_once "Fingerprint.php";
 require_once "JSONRenderer.php";
 require_once "Runner.php";
 require_once "Category.php";

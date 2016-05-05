@@ -13,7 +13,7 @@ composer-update:
 	  sh -c 'php composer.phar update && cat composer.lock' > composer.lock
 
 citest:
-	docker run --rm $(IMAGE_NAME) vendor/bin/phpunit ./tests
+	docker run --rm $(IMAGE_NAME) vendor/bin/phpunit --bootstrap engine.php ./tests
 
 test: image
-	docker run -it --rm $(IMAGE_NAME) vendor/bin/phpunit ./tests
+	docker run -it --rm $(IMAGE_NAME) vendor/bin/phpunit --bootstrap engine.php ./tests

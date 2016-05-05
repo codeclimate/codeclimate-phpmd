@@ -4,21 +4,28 @@ namespace PHPMD;
 
 class Fingerprint
 {
-    const OVERRIDE_RULES = ["match"];
+    const OVERRIDE_RULES = [
+      "CyclomaticComplexity",
+      "Design/LongClass",
+      "Design/LongMethod",
+    ];
+    private $name;
     private $path;
     private $rule;
 
-    function __construct($path, $rule) {
+    public function __construct($path, $rule, $name)
+    {
         $this->path = $path;
         $this->rule = $rule;
+        $this->name = $name;
     }
 
     public function compute()
     {
-        $fingerprint = NULL;
+        $fingerprint = null;
 
         if (in_array($this->rule, self::OVERRIDE_RULES)) {
-          $fingerprint = md5($this->path . $this->rule);
+            $fingerprint = md5($this->path . $this->rule . $this->name);
         }
 
         return $fingerprint;
