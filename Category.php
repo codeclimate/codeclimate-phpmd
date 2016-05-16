@@ -48,10 +48,9 @@ class Category
 
         if ($points && $metric) {
             return $points *= $metric;
-        } else {
-            return $points;
         }
-
+        
+        return $points;
     }
 
     public static function categoryFor($checkName)
