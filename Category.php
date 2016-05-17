@@ -47,9 +47,9 @@ class Category
         $points = self::$checks[$checkName][1];
 
         if ($points && $metric) {
-            return $points *= $metric;
+            $points *= $metric;
         }
-        
+
         return $points;
     }
 
