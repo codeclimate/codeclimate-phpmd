@@ -47,11 +47,10 @@ class Category
         $points = self::$checks[$checkName][1];
 
         if ($points && $metric) {
-            return $points *= $metric;
-        } else {
-            return $points;
+            $points *= $metric;
         }
 
+        return $points;
     }
 
     public static function categoryFor($checkName)
