@@ -2,7 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate-phpmd/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate-phpmd)
 
-`codeclimate-phpmd` is a Code Climate Engine that wraps the PHP Mess Detector (PHPMD) static analysis tool.
+`codeclimate-phpmd` is a Code Climate Engine that wraps the [PHP Mess Detector (PHPMD)](http://phpmd.org/) static analysis tool.
 
 ### Installation
 
