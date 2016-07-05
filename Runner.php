@@ -81,36 +81,41 @@ class Runner
 
     public function run($files)
     {
-        $resultFile = tempnam(sys_get_temp_dir(), 'phpmd');
+        try {
+            $resultFile = tempnam(sys_get_temp_dir(), 'phpmd');
 
-        $renderer = new JSONRenderer();
-        $renderer->setWriter(new StreamWriter($resultFile));
+            $renderer = new JSONRenderer();
+            $renderer->setWriter(new StreamWriter($resultFile));
 
-        $ruleSetFactory = new RuleSetFactory();
+            $ruleSetFactory = new RuleSetFactory();
 
-        $phpmd = new PHPMD();
+            $phpmd = new PHPMD();
 
-        if (isset($this->config['config']['file_extensions'])) {
-            $phpmd->setFileExtensions(explode(',', $this->config['config']['file_extensions']));
+            if (isset($this->config['config']['file_extensions'])) {
+                $phpmd->setFileExtensions(explode(',', $this->config['config']['file_extensions']));
+            }
+
+            $rulesets = Runner::RULESETS;
+
+            if (isset($this->config['config']['rulesets'])) {
+                $rulesets = $this->prefixCodeDirectory(
+                    $this->config['config']['rulesets']
+                );
+            }
+
+            foreach ($files as &$file) {
+                $phpmd->processFiles(
+                    $file,
+                    $rulesets,
+                    array($renderer),
+                    $ruleSetFactory
+                );
+            }
+
+            return $resultFile;
+        } catch (Exception $e) {
+            error_log("Exception: " . $e->getMessage() . " in " . $e->getFile() . "\n" . $e->getTraceAsString());
+            return "cc_exception_thrown";
         }
-
-        $rulesets = Runner::RULESETS;
-
-        if (isset($this->config['config']['rulesets'])) {
-            $rulesets = $this->prefixCodeDirectory(
-                $this->config['config']['rulesets']
-            );
-        }
-
-        foreach ($files as &$file) {
-            $phpmd->processFiles(
-                $file,
-                $rulesets,
-                array($renderer),
-                $ruleSetFactory
-            );
-        }
-
-        return $resultFile;
     }
 }
