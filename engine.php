@@ -38,12 +38,11 @@ $server->process_work(true);
 
 $results = $server->get_all_results();
 
-// If there is no output from the runner, an exception must have occurred
 foreach ($results as $result_file) {
-    if ($result_file = "cc_exception_thrown") {
+    if (is_a($result_file, "Exception")) {
         exit(1);
-    } else {
-        echo file_get_contents($result_file);
-        unlink($result_file);
     }
+
+    echo file_get_contents($result_file);
+    unlink($result_file);
 }
