@@ -8,6 +8,14 @@ class Fingerprint
       "CyclomaticComplexity",
       "Design/LongClass",
       "Design/LongMethod",
+      "Design/LongParameterList",
+      "Design/NpathComplexity",
+      "Design/NumberOfChildren",
+      "Design/TooManyFields",
+      "Design/TooManyMethods",
+      "Design/TooManyPublicMethods",
+      "Design/WeightedMethodCount",
+      "ExcessivePublicCount",
     ];
     private $name;
     private $path;
