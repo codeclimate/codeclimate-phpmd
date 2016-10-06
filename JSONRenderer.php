@@ -53,7 +53,7 @@ class JSONRenderer extends AbstractRenderer
                 $issue["fingerprint"] = $fingerprint;
             }
 
-            $json = json_encode($issue, JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE);
+            $json = json_encode($issue, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             $writer->write($json);
             $writer->write(chr(0));
         }
