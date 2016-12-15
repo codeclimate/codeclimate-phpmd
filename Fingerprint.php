@@ -5,6 +5,8 @@ namespace PHPMD;
 class Fingerprint
 {
     const OVERRIDE_RULES = [
+      "Controversial/CamelCaseVariableName",
+      "Controversial/CamelCasePropertyName",
       "CyclomaticComplexity",
       "Design/LongClass",
       "Design/LongMethod",
@@ -16,6 +18,7 @@ class Fingerprint
       "Design/TooManyPublicMethods",
       "Design/WeightedMethodCount",
       "ExcessivePublicCount",
+      "Naming/ShortMethodName",
     ];
     private $name;
     private $path;
