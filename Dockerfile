@@ -1,28 +1,46 @@
-FROM alpine:3.3
+FROM alpine:edge
 
 MAINTAINER Code Climate <hello@codeclimate.com>
 
 WORKDIR /usr/src/app
-COPY composer.json /usr/src/app/
-COPY composer.lock /usr/src/app/
-
-RUN apk --update add git php-common php-xml php-dom php-ctype php-iconv \
-    php-json php-pcntl php-phar php-openssl php-opcache php-sockets curl \
-    build-base ruby-dev ruby ruby-bundler && \
-    gem install httparty --no-rdoc --no-ri && \
-    gem install json --no-rdoc --no-ri && \
-    curl -sS https://getcomposer.org/installer | php && \
-    /usr/src/app/composer.phar install && \
-    apk del build-base
-
 COPY . /usr/src/app
 
+# Install PHP
+RUN apk --update add \
+      php7-common \
+      php7-ctype \
+      php7-dom \
+      php7-iconv \
+      php7-json \
+      php7-mbstring \
+      php7-opcache \
+      php7-openssl \
+      php7-pcntl \
+      php7-phar \
+      php7-sockets \
+      php7-xml && \
+    rm /var/cache/apk/* && \
+    ln -s /usr/bin/php7 /usr/bin/php
+
+RUN apk --update add curl && \
+    curl -sS https://getcomposer.org/installer | php && \
+    ./composer.phar install && \
+    apk del curl && \
+    rm /usr/src/app/composer.phar \
+       /var/cache/apk/*
+
+# Build Content
+RUN apk --update add build-base ca-certificates ruby ruby-dev && \
+    gem install json httparty --no-rdoc --no-ri && \
+    ./bin/build-content && \
+    rm -rf $( gem environment gemdir ) && \
+    apk del build-base ca-certificates ruby ruby-dev && \
+    rm /var/cache/apk/*
+
 RUN adduser -u 9000 -D app
-RUN chown -R app .
+RUN chown -R app:app .
 
 USER app
-
-RUN ./bin/build-content
 
 WORKDIR /code
 VOLUME /code
