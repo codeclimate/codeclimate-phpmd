@@ -8,6 +8,7 @@ class Fingerprint
       "Controversial/CamelCaseVariableName",
       "Controversial/CamelCasePropertyName",
       "CyclomaticComplexity",
+      "Design/CouplingBetweenObjects",
       "Design/LongClass",
       "Design/LongMethod",
       "Design/LongParameterList",
