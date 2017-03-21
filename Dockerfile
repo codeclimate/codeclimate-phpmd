@@ -30,7 +30,7 @@ RUN apk --update add curl && \
     rm /usr/src/app/composer.phar \
        /var/cache/apk/*
 
-COPY bin/build-content /usr/src/app/bin/build-content
+COPY bin/build-content ./bin/build-content
 
 # Build Content
 RUN apk --update add build-base ca-certificates ruby ruby-dev && \
