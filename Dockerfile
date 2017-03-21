@@ -21,8 +21,7 @@ RUN apk --update add \
     rm /var/cache/apk/* && \
     ln -s /usr/bin/php7 /usr/bin/php
 
-COPY composer.json /usr/src/app/composer.json
-COPY composer.lock /usr/src/app/composer.lock
+COPY composer.* ./
 
 RUN apk --update add curl && \
     curl -sS https://getcomposer.org/installer | php && \
@@ -41,7 +40,7 @@ RUN apk --update add build-base ca-certificates ruby ruby-dev && \
     apk del build-base ca-certificates ruby ruby-dev && \
     rm /var/cache/apk/*
 
-COPY . /usr/src/app
+COPY . ./
 
 RUN adduser -u 9000 -D app
 RUN chown -R app:app .
