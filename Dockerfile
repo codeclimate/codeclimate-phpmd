@@ -3,10 +3,9 @@ FROM alpine:edge
 MAINTAINER Code Climate <hello@codeclimate.com>
 
 WORKDIR /usr/src/app
-COPY . /usr/src/app
-
 # Install PHP
 RUN apk --update add \
+      php7 \
       php7-common \
       php7-ctype \
       php7-dom \
@@ -22,12 +21,16 @@ RUN apk --update add \
     rm /var/cache/apk/* && \
     ln -s /usr/bin/php7 /usr/bin/php
 
+COPY composer.* ./
+
 RUN apk --update add curl && \
     curl -sS https://getcomposer.org/installer | php && \
     ./composer.phar install && \
     apk del curl && \
     rm /usr/src/app/composer.phar \
        /var/cache/apk/*
+
+COPY bin/build-content ./bin/build-content
 
 # Build Content
 RUN apk --update add build-base ca-certificates ruby ruby-dev && \
@@ -36,6 +39,8 @@ RUN apk --update add build-base ca-certificates ruby ruby-dev && \
     rm -rf $( gem environment gemdir ) && \
     apk del build-base ca-certificates ruby ruby-dev && \
     rm /var/cache/apk/*
+
+COPY . ./
 
 RUN adduser -u 9000 -D app
 RUN chown -R app:app .
