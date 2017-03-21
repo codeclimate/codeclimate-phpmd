@@ -66,9 +66,9 @@ class Category
 
     public static function documentationFor($checkName)
     {
-        $rule = array_pop(
-            explode("/", $checkName)
-        );
+        $checkNameParts = explode("/", $checkName);
+        end($checkNameParts);
+        $rule = array_pop($checkNameParts);
 
         $filePath = dirname(__FILE__) . "/content/" . strtolower($rule) . ".txt";
 
