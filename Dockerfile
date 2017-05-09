@@ -16,19 +16,22 @@ RUN apk --update add \
       php7-openssl \
       php7-pcntl \
       php7-phar \
+      php7-simplexml \
       php7-sockets \
+      php7-tokenizer \
+      php7-xmlwriter \
       php7-xml && \
     rm /var/cache/apk/* && \
-    ln -s /usr/bin/php7 /usr/bin/php
+    ln -sf /usr/bin/php7 /usr/bin/php
 
 COPY composer.* ./
 
 RUN apk --update add curl && \
     curl -sS https://getcomposer.org/installer | php && \
     ./composer.phar install && \
+    mv composer.phar /usr/local/bin/composer && \
     apk del curl && \
-    rm /usr/src/app/composer.phar \
-       /var/cache/apk/*
+    rm /var/cache/apk/*
 
 COPY bin/build-content ./bin/build-content
 
