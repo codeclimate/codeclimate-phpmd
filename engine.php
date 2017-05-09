@@ -38,6 +38,11 @@ $server->process_work(true);
 
 $results = $server->get_all_results();
 
+// If there is no output from the runner, an exception must have occurred
+if (count($results) == 0) {
+    exit(1);
+}
+
 foreach ($results as $result_file) {
     if (is_a($result_file, "Exception")) {
         exit(1);
