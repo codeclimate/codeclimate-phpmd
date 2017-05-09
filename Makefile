@@ -10,7 +10,7 @@ composer-update:
 	  --rm \
 	  --volume $(PWD)/composer.json:/usr/src/app/composer.json:ro \
 	  $(IMAGE_NAME) \
-	  sh -c 'php composer.phar update && cat composer.lock' > composer.lock
+	  sh -c 'cd /usr/src/app && composer update && cat composer.lock' > composer.lock
 
 citest:
 	docker run --rm $(IMAGE_NAME) sh -c "cd /usr/src/app && vendor/bin/phpunit --bootstrap engine.php ./tests"
