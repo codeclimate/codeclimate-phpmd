@@ -92,7 +92,13 @@ class Runner
             $phpmd = new PHPMD();
 
             if (isset($this->config['config']['file_extensions'])) {
-                $phpmd->setFileExtensions(explode(',', $this->config['config']['file_extensions']));
+                $fileExtensions = $this->config['config']['file_extensions'];
+
+                if (is_string($fileExtensions)) {
+                    $fileExtensions = explode(',', $fileExtensions);
+                }
+
+                $phpmd->setFileExtensions($fileExtensions);
             }
 
             $rulesets = Runner::RULESETS;
