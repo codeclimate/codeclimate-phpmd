@@ -2,6 +2,7 @@
 
 namespace CodeClimate\PHPMD;
 
+use Exception;
 use PHPMD\PHPMD;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
