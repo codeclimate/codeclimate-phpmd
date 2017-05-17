@@ -10,14 +10,14 @@
 2. Run `codeclimate engines:enable phpmd`. This command both installs the engine and enables it in your `.codeclimate.yml` file.
 3. You're ready to analyze! Browse into your project's folder and run `codeclimate analyze`.
 
-###Config Options
+### Config Options
 
 Format the values for these config options per the [PHPMD documentation](http://phpmd.org/documentation/index.html).
 
 * file_extensions - This is where you can configure the file extensions for the files that you want PHPMD to analyze.
 * rulesets - This is the list of rulesets that you want PHPMD to use while analyzing your files.
 
-###Sample Config
+### Sample Config
 
     exclude_paths:
      - "/examples/**/*"
