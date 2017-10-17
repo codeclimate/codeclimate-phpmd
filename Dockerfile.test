@@ -1,0 +1,7 @@
+ARG BASE_IMAGE=codeclimate/codeclimate-phpmd
+FROM ${BASE_IMAGE}
+
+WORKDIR /usr/src/app
+
+RUN composer install --dev && \
+    rm -r ~/.composer
