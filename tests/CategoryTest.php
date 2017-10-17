@@ -4,7 +4,7 @@ namespace PHPMD\Tests;
 
 use PHPMD\Category\Category;
 
-class CategoryTest extends \PHPUnit_Framework_TestCase
+class CategoryTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testCategoryFor()
