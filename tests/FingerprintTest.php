@@ -4,7 +4,7 @@ namespace PHPMD\Tests;
 
 use PHPMD\Fingerprint;
 
-class FingerprintTest extends \PHPUnit_Framework_TestCase
+class FingerprintTest extends \PHPUnit\Framework\TestCase
 {
     public function testComputesFingerprintForMatchingRules()
     {
