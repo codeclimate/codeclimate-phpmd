@@ -28,13 +28,13 @@ RUN apk add --no-cache \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
     apk del --purge curl && \
-    rm -r ~/.composer /var/cache/misc/*
+    rm -r ~/.composer
 
 # Install Dependencies
 COPY composer.* ./
 RUN composer install --no-dev && \
     chown -R app:app . && \
-    rm -r ~/.composer /tmp/composer*
+    rm -r ~/.composer
 
 # Build Content
 COPY bin/build-content ./bin/build-content
