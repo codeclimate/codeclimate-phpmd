@@ -7,6 +7,8 @@ use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 use PHPMD\Renderer\JSONRenderer;
 
+const CFG = "config";
+
 class Runner
 {
     const RULESETS = 'cleancode,codesize,controversial,design,naming,unusedcode';
@@ -91,8 +93,8 @@ class Runner
 
             $phpmd = new PHPMD();
 
-            if (isset($this->config['config']['file_extensions'])) {
-                $fileExtensions = $this->config['config']['file_extensions'];
+            if (isset($this->config[CFG]['file_extensions'])) {
+                $fileExtensions = $this->config[CFG]['file_extensions'];
 
                 if (is_string($fileExtensions)) {
                     $fileExtensions = explode(',', $fileExtensions);
@@ -103,9 +105,9 @@ class Runner
 
             $rulesets = Runner::RULESETS;
 
-            if (isset($this->config['config']['rulesets'])) {
+            if (isset($this->config[CFG]['rulesets'])) {
                 $rulesets = $this->prefixCodeDirectory(
-                    $this->config['config']['rulesets']
+                    $this->config[CFG]['rulesets']
                 );
             }
 
