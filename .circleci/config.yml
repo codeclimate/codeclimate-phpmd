@@ -3,11 +3,11 @@ jobs:
   build:
     machine:
       enabled: true
-      image: circleci/classic:201709-01
+      image: circleci/classic:201710-02
     environment:
       CLOUDSDK_CORE_DISABLE_PROMPTS: 1
       PRIVATE_REGISTRY: us.gcr.io/code_climate
-      IMAGE_NAME: ${PRIVATE_REGISTRY}/${CIRCLE_PROJECT_REPONAME}:b${CIRCLE_BUILD_NUM}
+      IMAGE_NAME: "${PRIVATE_REGISTRY}/${CIRCLE_PROJECT_REPONAME}-b${CIRCLE_BUILD_NUM}"
     steps:
       - checkout
       - run:
@@ -24,7 +24,7 @@ jobs:
               curl https://sdk.cloud.google.com | bash
               gcloud auth activate-service-account ${gcloud_account_email} --key-file /tmp/gcloud_key.json
               gcloud docker -a
-              docker push ${IMAGE_NAME}
+              docker push "${IMAGE_NAME}"
             fi
 
 notify:
