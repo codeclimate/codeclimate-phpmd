@@ -23,12 +23,11 @@ RUN apk add --no-cache \
       php7-tokenizer \
       php7-xmlwriter \
       php7-xml && \
-    ln -sf /usr/bin/php7 /usr/bin/php && \
-    apk add --no-cache curl && \
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    apk del --purge curl && \
-    rm -r ~/.composer
+      ln -sf /usr/bin/php7 /usr/bin/php
+
+# Bring composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
 
 # Install Dependencies
 COPY composer.* ./
