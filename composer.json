@@ -1,6 +1,6 @@
 {
     "require": {
-        "phpmd/phpmd": "~2.7",
+        "phpmd/phpmd": "~2.3",
         "barracudanetworks/forkdaemon-php": "~1.0.7"
     },
     "require-dev": {
