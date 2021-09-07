@@ -46,7 +46,10 @@ workflows:
   build_release:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
+
 
 notify:
   webhooks:
