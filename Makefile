@@ -19,8 +19,6 @@ composer-update:
 	  $(IMAGE_NAME) \
 	  sh -c 'cd /usr/src/app && composer update'
 
-citest: test
-
 test:
 	@$(MAKE) test-image > /dev/null
 	docker run \
