@@ -1,25 +1,27 @@
 version: 2
+
+base: &base
+  machine:
+    docker_layer_caching: true
+  working_directory: ~/codeclimate/codeclimate-phpmd
+
+
+
 jobs:
   build:
-    machine:
-      docker_layer_caching: true
-    working_directory: ~/codeclimate/codeclimate-phpmd
+    <<: *base
     steps:
       - checkout
       - run: make image
 
   test:
-    machine:
-      docker_layer_caching: true
-    working_directory: ~/codeclimate/codeclimate-phpmd
+    <<: *base
     steps:
       - checkout
       - run: make test
 
   release:
-    machine:
-      docker_layer_caching: true
-    working_directory: ~/codeclimate/codeclimate-phpmd
+    <<: *base
     steps:
       - checkout
       - run: make image
