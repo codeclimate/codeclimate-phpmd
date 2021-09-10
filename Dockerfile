@@ -23,12 +23,11 @@ RUN apk add --no-cache \
       php7-tokenizer \
       php7-xmlwriter \
       php7-xml && \
-    ln -sf /usr/bin/php7 /usr/bin/php && \
-    apk add --no-cache curl && \
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    apk del --purge curl && \
-    rm -r ~/.composer
+      ln -sf /usr/bin/php7 /usr/bin/php
+
+# Bring composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
 
 # Install Dependencies
 COPY composer.* ./
@@ -38,13 +37,13 @@ RUN composer install --no-dev && \
 
 # Build Content
 COPY bin/build-content ./bin/build-content
-RUN apk add --no-cache ruby ruby-json&& \
-    gem install httparty --no-rdoc --no-ri && \
+RUN apk add --no-cache ruby ruby-json ruby-bigdecimal && \
+    gem install rdoc httparty --no-document && \
     ./bin/build-content && \
     chown -R app:app content && \
-    gem uninstall httparty && \
+    gem uninstall rdoc httparty && \
     rm -rf $( gem environment gemdir ) && \
-    apk del --purge ruby ruby-json && \
+    apk del --purge ruby ruby-json ruby-bigdecimal && \
     rm -r /var/cache/* ~/.gem
 
 COPY . ./

@@ -1,31 +1,53 @@
+orbs:
+  slack: circleci/slack@3.4.2
+
 version: 2
+
+base: &base
+  machine:
+    docker_layer_caching: true
+  working_directory: ~/codeclimate/codeclimate-phpmd
+
+
+
 jobs:
   build:
-    machine:
-      enabled: true
-      image: circleci/classic:201709-01
-    environment:
-      CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-      PRIVATE_REGISTRY: us.gcr.io/code_climate
-      IMAGE_NAME: ${PRIVATE_REGISTRY}/${CIRCLE_PROJECT_REPONAME}:b${CIRCLE_BUILD_NUM}
+    <<: *base
     steps:
       - checkout
+      - run: make image
+
+  test:
+    <<: *base
+    steps:
+      - checkout
+      - run: make test
+
+  release:
+    <<: *base
+    steps:
+      - checkout
+      - run: make image
+      - run: echo "$GCR_JSON_KEY" | docker login -u _json_key --password-stdin us.gcr.io
       - run:
-          name: Prebuild images
-          command: make test-image
-      - run:
-          name: Tests
-          command: make test
-      - deploy:
-          name: Deployment
+          name: Push image to GCR
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo ${GCLOUD_JSON_KEY_BASE64} | sed 's/ //g' | base64 -d > /tmp/gcloud_key.json
-              curl https://sdk.cloud.google.com | bash
-              gcloud auth activate-service-account ${gcloud_account_email} --key-file /tmp/gcloud_key.json
-              gcloud docker -a
-              docker push ${IMAGE_NAME}
-            fi
+            docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
+              us.gcr.io/code-climate/codeclimate-phpmd:b$CIRCLE_BUILD_NUM
+            docker push us.gcr.io/code-climate/codeclimate-phpmd:b$CIRCLE_BUILD_NUM
+
+workflows:
+  version: 2
+  build_release:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - release:
+          requires:
+            - test
+
 
 notify:
   webhooks:

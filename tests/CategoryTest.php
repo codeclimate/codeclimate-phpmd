@@ -12,10 +12,4 @@ class CategoryTest extends \PHPUnit\Framework\TestCase
         $category = Category::categoryFor("Design/EvalExpression");
         $this->assertEquals("Security", $category);
     }
-
-    public function testDocumentationFor()
-    {
-        $documentation = Category::documentationFor("Design/EvalExpression");
-        $this->assertContains("An eval-expression is untestable", $documentation);
-    }
 }
