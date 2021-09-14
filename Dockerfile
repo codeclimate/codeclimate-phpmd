@@ -35,16 +35,18 @@ RUN composer install --no-dev && \
     chown -R app:app . && \
     rm -r ~/.composer
 
+
 # Build Content
 COPY bin/build-content ./bin/build-content
-RUN apk add --no-cache ruby ruby-json ruby-bigdecimal && \
-    gem install rdoc httparty --no-document && \
+RUN apk add --no-cache ruby ruby-json ruby-bigdecimal ruby-nokogiri ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
+    gem install rdoc nokogiri httparty --no-document && \
     ./bin/build-content && \
-    chown -R app:app content && \
-    gem uninstall rdoc httparty && \
-    rm -rf $( gem environment gemdir ) && \
-    apk del --purge ruby ruby-json ruby-bigdecimal && \
-    rm -r /var/cache/* ~/.gem
+    chown -R app:app content
+    #chown -R app:app content && \
+    #gem uninstall rdoc httparty && \
+    #rm -rf $( gem environment gemdir ) && \
+    #apk del --purge ruby ruby-json ruby-bigdecimal && \
+    #rm -r /var/cache/* ~/.gem
 
 COPY . ./
 
