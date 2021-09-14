@@ -29,6 +29,7 @@ class Category
         "Design/CouplingBetweenObjects" => [self::CLARITY, 400000],
         "Design/DepthOfInheritance" => [self::CLARITY, 500000],
         "Design/DevelopmentCodeFragment" => [self::SECURITY, 100000],
+        "Design/EmptyCatchBlock" => [self::BUG_RISK, 200000],
         "Design/EvalExpression" => [self::SECURITY, 300000],
         "Design/ExitExpression" => [self::BUG_RISK, 200000],
         "Design/GotoStatement" => [self::CLARITY, 200000],
