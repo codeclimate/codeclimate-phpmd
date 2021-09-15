@@ -52,7 +52,7 @@ end
 rules.each do |rule|
   File.open("#{CONTENT_DIR}/#{rule.name.downcase}.txt", "w") do |file|
     md = <<~MARKDOWN
-      # #{rule.name}
+      ## #{rule.name}
       #{"### Since: " if rule.since } #{rule.since if rule.since}
 
       #{rule.description}
@@ -62,7 +62,7 @@ rules.each do |rule|
       #{rule.example}
       ```
 
-      ## Source #{rule.source}
+      ### Source #{rule.source}
     MARKDOWN
     file.write(md)
   end
