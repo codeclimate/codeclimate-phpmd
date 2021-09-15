@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28882560764636735bfc101d7e6ce537",
+    "content-hash": "45403bcb551b5c671c23f02e2cfba96e",
     "packages": [
         {
             "name": "barracudanetworks/forkdaemon-php",
