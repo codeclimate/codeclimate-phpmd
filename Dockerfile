@@ -37,13 +37,13 @@ RUN composer install --no-dev && \
 
 # Build Content
 COPY bin/build-content ./bin/build-content
-RUN apk add --no-cache ruby ruby-json ruby-bigdecimal && \
-    gem install rdoc httparty --no-document && \
+RUN apk add --no-cache ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
+    gem install rdoc nokogiri httparty --no-document && \
     ./bin/build-content && \
     chown -R app:app content && \
-    gem uninstall rdoc httparty && \
+    gem uninstall --all rdoc httparty nokogiri && \
     rm -rf $( gem environment gemdir ) && \
-    apk del --purge ruby ruby-json ruby-bigdecimal && \
+    apk del --purge ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
     rm -r /var/cache/* ~/.gem
 
 COPY . ./

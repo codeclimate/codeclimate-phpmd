@@ -3,6 +3,7 @@
 namespace CodeClimate\PHPMD;
 
 use PHPMD\PHPMD;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 use PHPMD\Renderer\JSONRenderer;
@@ -115,7 +116,8 @@ class Runner
                     $file,
                     $rulesets,
                     array($renderer),
-                    $ruleSetFactory
+                    $ruleSetFactory,
+                    new Report()
                 );
             }
 
