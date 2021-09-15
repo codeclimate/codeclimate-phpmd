@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run: make test
 
-  release:
+  release_images:
     <<: *base
     steps:
       - checkout
@@ -41,7 +41,7 @@ workflows:
       - test:
           requires:
             - build
-      - release:
+      - release_images:
           requires:
             - test
 
