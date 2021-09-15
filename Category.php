@@ -27,6 +27,7 @@ class Category
         "Controversial/Superglobals" => [self::SECURITY, 100000],
         "CyclomaticComplexity" => [self::COMPLEXITY, 100000],
         "Design/CouplingBetweenObjects" => [self::CLARITY, 400000],
+        "Design/CountInLoopExpression" => [self::BUG_RISK, 100000],
         "Design/DepthOfInheritance" => [self::CLARITY, 500000],
         "Design/DevelopmentCodeFragment" => [self::SECURITY, 100000],
         "Design/EmptyCatchBlock" => [self::BUG_RISK, 200000],
