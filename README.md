@@ -4,6 +4,7 @@
 
 `codeclimate-phpmd` is a Code Climate Engine that wraps the [PHP Mess Detector (PHPMD)](http://phpmd.org/) static analysis tool.
 
+
 ### Installation
 
 1. If you haven't already, [install the Code Climate CLI](https://github.com/codeclimate/codeclimate).
