@@ -44,7 +44,7 @@ RUN apk add --no-cache ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml
     gem uninstall --all rdoc httparty nokogiri && \
     rm -rf $( gem environment gemdir ) && \
     apk del --purge ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
-    rm -r /var/cache/* ~/.gem
+    rm -rf /var/cache/* ~/.gem
 
 COPY . ./
 
