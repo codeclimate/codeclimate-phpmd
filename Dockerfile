@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.15.0
 LABEL maintainer="Code Climate <hello@codeclimate.com>"
 
 WORKDIR /usr/src/app
@@ -37,13 +37,13 @@ RUN composer install --no-dev && \
 
 # Build Content
 COPY bin/build-content ./bin/build-content
-RUN apk add --no-cache ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
+RUN apk add --no-cache ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev yaml-dev && \
     gem install rdoc nokogiri httparty --no-document && \
     ./bin/build-content && \
     chown -R app:app content && \
     gem uninstall --all rdoc httparty nokogiri && \
     rm -rf $( gem environment gemdir ) && \
-    apk del --purge ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev && \
+    apk del --purge ruby ruby-json ruby-bigdecimal ruby-dev build-base libxml2-dev libxslt-dev libffi-dev yaml-dev && \
     rm -rf /var/cache/* ~/.gem
 
 COPY . ./
