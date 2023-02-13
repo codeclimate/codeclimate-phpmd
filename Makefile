@@ -1,8 +1,11 @@
-.PHONY: image composer-update test release
+.PHONY: image composer-update test release tuki
 
 IMAGE_NAME ?= codeclimate/codeclimate-phpmd
 RELEASE_REGISTRY ?= codeclimate
-RELEASE_TAG ?= latest
+
+ifndef RELEASE_TAG
+override RELEASE_TAG = latest
+endif
 
 image:
 	docker build --tag $(IMAGE_NAME) .
