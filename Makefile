@@ -1,4 +1,4 @@
-.PHONY: image composer-update test release tuki
+.PHONY: image composer-update test release
 
 IMAGE_NAME ?= codeclimate/codeclimate-phpmd
 RELEASE_REGISTRY ?= codeclimate
