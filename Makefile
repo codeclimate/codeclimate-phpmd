@@ -1,6 +1,8 @@
-.PHONY: image composer-update test
+.PHONY: image composer-update test release
 
 IMAGE_NAME ?= codeclimate/codeclimate-phpmd
+RELEASE_REGISTRY ?= codeclimate
+RELEASE_TAG ?= latest
 
 image:
 	docker build --tag $(IMAGE_NAME) .
@@ -26,3 +28,7 @@ test:
 		--volume $(PWD)/tests:/usr/src/app/tests \
 		$(IMAGE_NAME)-test \
 		sh -c "vendor/bin/phpunit --bootstrap engine.php ./tests"
+
+release:
+	docker tag $(IMAGE_NAME) $(RELEASE_REGISTRY)/codeclimate-phpmd:$(RELEASE_TAG)
+	docker push $(RELEASE_REGISTRY)/codeclimate-phpmd:$(RELEASE_TAG)
